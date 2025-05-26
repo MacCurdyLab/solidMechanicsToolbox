@@ -46,7 +46,7 @@ e = sumsqr(error);
 
 if plotme
     %plot fit data
-    plot(strain,Sfit,'k--','linewidth',1.5,'DisplayName','Discrete Prony Fit')
+    plot(strain,Sfit,'k--','linewidth',1.5,'DisplayName','Ogden Fit')
     set(gca,'fontname','georgia','fontsize',16)
     
     %print model coefficients

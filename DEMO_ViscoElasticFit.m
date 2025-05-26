@@ -8,13 +8,15 @@ load dependencies/RawUniaxialData.mat
 %visualize raw data from ramp-hold-ramp to failure test
 plot(t(1:t1i),S(1:t1i),'linewidth',2,'displayname','Ramp'); hold on
 plot(t(t1i:t2i),S(t1i:t2i),'linewidth',2,'displayname','Hold'); hold on
+xlabel('time [s]')
+ylabel('stress [MPa]')
 % plot(t(t2i:end),S(t2i:end),'linewidth',2,'displayname','Ramp'); hold on
 legend('location','northeast')
 set(gca,'fontsize',16)
 
 %create a time vector to interpolate from. Let's just fit to the ramp-hold
 %portion of the data for this test
-time = [linspace(0,t(t1i-2),30) logspace(log10(t(t1i)),log10(t(t2i)),30)];
+time = [linspace(0,t(t1i-2),40) logspace(log10(t(t1i)),log10(t(t2i)),40)];
 
 %create decimated datasets for fitting
 strain = interp1(t,s,time);
@@ -27,8 +29,8 @@ Einf = 1.5*S(t1i)/s(t1i);
 
 %intialize some guesses for g_i and tau_i. The length of these vectors
 %determines the prony series order (must be the same length)
-g = [0.25 0.25]; %these must sum to <1
-tau = [0.1 2]; %usually separate these by an order of magnitude
+g = [0.25 0.25 0.2]; %these must sum to <1
+tau = [0.1 2 10]; %usually separate these by an order of magnitude
 
 %reshape the inputs into a vector of initial guesses
 X0 = [Einf reshape([g; tau],1,[])];
