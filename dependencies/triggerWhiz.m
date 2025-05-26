@@ -29,7 +29,7 @@ bad = true;
 while bad
 
 %open up a figure, and make it nice and large (more room to see the signal)
-f = figure("Position",[325 125 1200 775]);
+f = figure("Position",[125 25 1150 700]);
 
 %plot the signal
 s = plot(S,'k-','linewidth',1,'markersize',5);
@@ -41,10 +41,11 @@ Instructions = ['Rclick = Set Trigger at Cursor  ',...
                         'Enter = Accept Placement  '];
 
 
-%                         'Lclick = dilate time axis  ',...
+%                         'Rclick = dilate time axis  ',...
 %                         'dKey = apply derivative  ', ...
 %                         'fKey = apply filter  ', ...
-%                         'sKey = start over'];
+%                         'sKey = start over' ;
+%                         '0Key = null result];
 
 zoomScale = [0.25 1.0];
 
@@ -91,6 +92,10 @@ title(Instructions)
               s = plot(S,'k-','linewidth',1,'markersize',5);
               plotSi = false;
               axis(Lold)
+         case 48 % 0Key
+              close(f)
+              Si = NaN;
+              return   
       end
       if exist('p')
         delete(p)
