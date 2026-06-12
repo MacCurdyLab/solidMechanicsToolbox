@@ -1,10 +1,12 @@
 %% Demo: fitting hyperelasticity model to test data
 
 clear; clc; close all
+addpath('dependencies');
 
-data = importdata('dependencies\Diabase X60.txt');
+data = importdata('dependencies/FilaFlex 70A.txt');
 
-plot(data(:,2),data(:,3),'r.','linewidth',2,'displayname',...
+figure();
+plot(data(:,1),data(:,2),'r.','linewidth',2,'displayname',...
     'Raw Data','markersize',20); hold on
 xlabel('Stretch')
 ylabel('Stress [MPa]')
@@ -16,8 +18,8 @@ mu = [0.2 0.5];
 alpha = [0.5 -0.5];
 
 %reshape into vector of initial guesses
-strain = data(:,2);
-stress = data(:,3);
+stretch = data(:,1);
+stress = data(:,2);
 X0 = reshape([mu; alpha],1,[]);
 
 %define upper and lower limits for guesses
@@ -27,9 +29,9 @@ ub = inf(size(X0));
 
 %solve for the model coefficients
 options = optimset('MaxFunEvals',1000);
-X = fmincon(@(X) errorFunc(X,strain,stress,0),X0,[],[],[],[],lb,ub,[],options);
+X = fmincon(@(X) errorFunc(X,stretch,stress,0),X0,[],[],[],[],lb,ub,[],options);
 
-errorFunc(X,strain,stress,1);
+errorFunc(X,stretch,stress,1);
 
 function e = errorFunc(X,strain,stress,plotme)
 
